@@ -1,7 +1,7 @@
 {
   "public": {
     "default": {
-      "commerce-core-endpoint": "https://edge-graph.adobe.io/api/d9279fff-2250-4285-8f74-003cc5bc7666/graphql",
+      "commerce-core-endpoint": "https://au1.api.commerce.adobe.com/KCkmVHBurtVedk5H8E2qBR/graphql",
       "commerce-endpoint": "https://edge-graph.adobe.io/api/d9279fff-2250-4285-8f74-003cc5bc7666/graphql",
       "headers": {
         "all": {
