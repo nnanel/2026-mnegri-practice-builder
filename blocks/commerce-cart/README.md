@@ -20,6 +20,7 @@ The Commerce Cart block renders a comprehensive shopping cart interface with pro
 | `checkout-url` | string | `''` | URL for checkout button | No | Sets destination for checkout action |
 | `enable-updating-product` | string | `'false'` | Enables product editing via mini-PDP modal | No | Shows/hides edit buttons for configurable products |
 | `undo-remove-item` | string | `'false'` | Enables undo functionality when removing items | No | Shows/hides undo option after item removal |
+| `free-shipping-threshold` | string | `''` | Cart total (numeric, no currency symbol) required to qualify for free shipping | No | Shows a free shipping progress bar in the cart heading when set to a value greater than 0 |
 
 <!-- ### URL Parameters
 
@@ -48,6 +49,7 @@ No localStorage keys are used by this block. -->
 - **Populated Cart**: When cart has items, shows full cart interface with product list and order summary
 - **Configurable Products**: When configurable products are present and editing is enabled, shows edit buttons
 - **Gift Options**: Shows gift options section when cart is not empty
+- **Free Shipping Progress**: When `free-shipping-threshold` is configured, shows a progress bar in the cart heading indicating how much more the shopper needs to spend to qualify for free shipping, updating live as `cart/data` changes
 
 ### User Interaction Flows
 

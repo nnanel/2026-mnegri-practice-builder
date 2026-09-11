@@ -26,6 +26,37 @@
   margin-top: var(--spacing-medium);
 }
 
+.commerce-cart .cart__free-shipping-progress {
+  margin-top: var(--spacing-xsmall);
+}
+
+.commerce-cart .cart__free-shipping-progress-message {
+  margin: 0 0 var(--spacing-xxsmall);
+  font: var(--type-body-2-default-font);
+  letter-spacing: var(--type-body-2-default-letter-spacing);
+}
+
+.commerce-cart .cart__free-shipping-progress--complete .cart__free-shipping-progress-message {
+  color: var(--color-positive-800);
+}
+
+.commerce-cart .cart__free-shipping-progress-track {
+  background-color: var(--color-neutral-300);
+  border-radius: var(--shape-border-radius-1);
+  height: var(--spacing-xxsmall);
+  overflow: hidden;
+}
+
+.commerce-cart .cart__free-shipping-progress-fill {
+  background-color: var(--color-brand-600);
+  height: 100%;
+  transition: width 0.3s ease;
+}
+
+.commerce-cart .cart__free-shipping-progress--complete .cart__free-shipping-progress-fill {
+  background-color: var(--color-positive-800);
+}
+
 .dropin-cart-item__footer {
   margin-top: var(--spacing-xsmall);
   gap: var(--spacing-xsmall);

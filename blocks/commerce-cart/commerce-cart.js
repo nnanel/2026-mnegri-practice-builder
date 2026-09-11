@@ -2,6 +2,7 @@ import { events } from '@dropins/tools/event-bus.js';
 import { render as provider } from '@dropins/storefront-cart/render.js';
 import * as Cart from '@dropins/storefront-cart/api.js';
 import { h } from '@dropins/tools/preact.js';
+import { getPriceFormatter } from '@dropins/tools/lib.js';
 import {
   InLineAlert,
   Icon,
@@ -48,7 +49,10 @@ export default async function decorate(block) {
     'checkout-url': checkoutURL = '',
     'enable-updating-product': enableUpdatingProduct = 'false',
     'undo-remove-item': undo = 'false',
+    'free-shipping-threshold': freeShippingThreshold = '',
   } = readBlockConfig(block);
+
+  const freeShippingThresholdValue = parseFloat(freeShippingThreshold) || 0;
 
   const placeholders = await fetchPlaceholders();
 
@@ -183,6 +187,16 @@ export default async function decorate(block) {
       enableRemoveItem: enableRemoveItem === 'true',
       undo: undo === 'true',
       slots: {
+        Heading: (ctx) => {
+          const el = document.createElement('div');
+          el.innerText = 'Your Bag';
+          ctx.appendChild(el);
+
+          if (freeShippingThresholdValue > 0) {
+            ctx.appendChild(renderFreeShippingProgress(freeShippingThresholdValue, placeholders));
+          }
+        },
+
         Thumbnail: (ctx) => {
           const { item, defaultImageProps } = ctx;
           const anchorWrapper = document.createElement('a');
@@ -328,6 +342,55 @@ export default async function decorate(block) {
 
 function isCartEmpty(cart) {
   return cart ? cart.totalQuantity < 1 : true;
+}
+
+function renderFreeShippingProgress(threshold, placeholders) {
+  const wrapper = document.createElement('div');
+  wrapper.className = 'cart__free-shipping-progress';
+  wrapper.setAttribute('role', 'status');
+  wrapper.setAttribute('aria-live', 'polite');
+
+  const message = document.createElement('p');
+  message.className = 'cart__free-shipping-progress-message';
+
+  const track = document.createElement('div');
+  track.className = 'cart__free-shipping-progress-track';
+
+  const fill = document.createElement('div');
+  fill.className = 'cart__free-shipping-progress-fill';
+  track.appendChild(fill);
+
+  wrapper.append(message, track);
+
+  events.on(
+    'cart/data',
+    (cartData) => {
+      const total = cartData?.total?.includingTax;
+      const totalValue = total?.value ?? 0;
+      const remaining = Math.max(threshold - totalValue, 0);
+      const percent = Math.min((totalValue / threshold) * 100, 100);
+
+      fill.style.width = `${percent}%`;
+      wrapper.classList.toggle('cart__free-shipping-progress--complete', remaining <= 0);
+
+      if (remaining <= 0) {
+        message.textContent = placeholders?.Global?.CartFreeShippingQualified
+          || 'You qualify for free shipping!';
+      } else {
+        const formattedRemaining = total?.currency
+          ? getPriceFormatter({ currency: total.currency }).format(remaining)
+          : remaining.toFixed(2);
+
+        const template = placeholders?.Global?.CartFreeShippingProgress
+          || 'Add {amount} more to your cart for free shipping';
+
+        message.textContent = template.replace('{amount}', formattedRemaining);
+      }
+    },
+    { eager: true },
+  );
+
+  return wrapper;
 }
 
 function swatchImageSlot(ctx) {
