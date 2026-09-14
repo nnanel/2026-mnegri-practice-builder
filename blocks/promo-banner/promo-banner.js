@@ -1,7 +1,6 @@
 export default function decorate(block) {
   // rows authored as: Image | Heading | Text | CTA
-  const [image, heading, text, cta] =
-    [...block.children].map((row) => row.firstElementChild);
+  const [image, heading, text, cta] = [...block.children].map((row) => row.firstElementChild);
 
   block.textContent = '';
   block.classList.add('promo-banner');
