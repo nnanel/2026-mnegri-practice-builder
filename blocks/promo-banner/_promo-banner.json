@@ -3,15 +3,19 @@
     {
       "title": "Promo Banner",
       "id": "promo-banner",
+      "model": "promo-banner",
       "plugins": {
-        "xwalk": {
-          "page": {
-            "resourceType": "core/franklin/components/block/v1/block",
-            "template": {
-              "name": "Promo Banner",
-              "model": "promo-banner"
-            }
-          }
+        "da": {
+          "rows": 4,
+          "columns": 1,
+          "fields": [
+            { "name": "image",    "selector": "div:nth-child(1)>div>picture>img[src]" },
+            { "name": "imageAlt", "selector": "div:nth-child(1)>div>picture>img[alt]" },
+            { "name": "heading",  "selector": "div:nth-child(2)>div" },
+            { "name": "text",     "selector": "div:nth-child(3)>div" },
+            { "name": "ctaText",  "selector": "div:nth-child(4)>div>p>a" },
+            { "name": "ctaLink",  "selector": "div:nth-child(4)>div>p>a[href]" }
+          ]
         }
       }
     }
@@ -20,10 +24,12 @@
     {
       "id": "promo-banner",
       "fields": [
-        { "component": "reference", "name": "image", "label": "Image", "multi": false },
-        { "component": "text", "name": "heading", "label": "Heading", "value": "" },
-        { "component": "richtext", "name": "text", "label": "Text", "value": "" },
-        { "component": "aem-content", "name": "cta", "label": "CTA Link" }
+        { "component": "reference", "valueType": "string", "name": "image",    "label": "Image", "multi": false },
+        { "component": "text",      "valueType": "string", "name": "imageAlt", "label": "Image Alt" },
+        { "component": "text",      "valueType": "string", "name": "heading",  "label": "Heading" },
+        { "component": "richtext",  "valueType": "string", "name": "text",     "label": "Text" },
+        { "component": "text",      "valueType": "string", "name": "ctaText",  "label": "CTA Text" },
+        { "component": "text",      "valueType": "string", "name": "ctaLink",  "label": "CTA Link" }
       ]
     }
   ],
