@@ -1,7 +1,20 @@
 {
   "permissions": {
     "allow": [
-      "Bash(node -e \"JSON.parse\\(require\\('fs'\\).readFileSync\\('blocks/promo-banner/_promo-banner.json'\\)\\)\")"
+      "Bash(node -e \"JSON.parse\\(require\\('fs'\\).readFileSync\\('blocks/promo-banner/_promo-banner.json'\\)\\)\")",
+      "Bash(git rebase *)",
+      "Bash(git stash *)",
+      "Bash(git fetch *)",
+      "Bash(git push *)",
+      "Read(//Users/mnegri/.ssh/**)",
+      "Bash(ssh-add -l)",
+      "Bash(ssh -T git@github-mnegri)",
+      "WebSearch",
+      "WebFetch(domain:www.aem.live)",
+      "Bash(git commit --allow-empty -m ' *)",
+      "Bash(gh api *)",
+      "Read(//opt/homebrew/bin/**)",
+      "Bash(brew list *)"
     ]
   }
 }
